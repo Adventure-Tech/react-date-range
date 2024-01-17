@@ -27,7 +27,7 @@ import {
   min,
   max,
 } from 'date-fns';
-import { enUS as defaultLocale } from 'date-fns/locale/en-US';
+import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../../styles';
 import { ariaLabelsShape } from '../../accessibility';
 

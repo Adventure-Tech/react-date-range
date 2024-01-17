@@ -1,7 +1,9 @@
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
-var _dateFns = require("date-fns");
+var _isSameDay = _interopRequireDefault(require("date-fns/isSameDay"));
+var _addDays = _interopRequireDefault(require("date-fns/addDays"));
+var _subDays = _interopRequireDefault(require("date-fns/subDays"));
 var _DateRange = _interopRequireDefault(require("../DateRange"));
 var _reactTestRenderer = _interopRequireDefault(require("react-test-renderer"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -9,7 +11,7 @@ function _extends() { _extends = Object.assign ? Object.assign.bind() : function
 let testRenderer = null;
 let instance = null;
 const endDate = new Date();
-const startDate = (0, _dateFns.subDays)(endDate, 7);
+const startDate = (0, _subDays.default)(endDate, 7);
 const commonProps = {
   ranges: [{
     startDate,
@@ -24,7 +26,7 @@ const compareRanges = (newRange, assertionRange) => {
     if (!newRange[key] || !assertionRange[key]) {
       return expect(newRange[key]).toEqual(assertionRange[key]);
     }
-    return expect((0, _dateFns.isSameDay)(newRange[key], assertionRange[key])).toEqual(true);
+    return expect((0, _isSameDay.default)(newRange[key], assertionRange[key])).toEqual(true);
   });
 };
 beforeEach(() => {
@@ -36,36 +38,36 @@ describe('DateRange', () => {
     expect(_DateRange.default).toEqual(expect.anything());
   });
   test('calculate new selection by resetting end date', () => {
-    const methodResult = instance.calcNewSelection((0, _dateFns.subDays)(endDate, 10), true);
+    const methodResult = instance.calcNewSelection((0, _subDays.default)(endDate, 10), true);
     compareRanges(methodResult.range, {
-      startDate: (0, _dateFns.subDays)(endDate, 10),
-      endDate: (0, _dateFns.subDays)(endDate, 10)
+      startDate: (0, _subDays.default)(endDate, 10),
+      endDate: (0, _subDays.default)(endDate, 10)
     });
   });
   test('calculate new selection by resetting end date if start date is not before', () => {
-    const methodResult = instance.calcNewSelection((0, _dateFns.addDays)(endDate, 2), true);
+    const methodResult = instance.calcNewSelection((0, _addDays.default)(endDate, 2), true);
     compareRanges(methodResult.range, {
-      startDate: (0, _dateFns.addDays)(endDate, 2),
-      endDate: (0, _dateFns.addDays)(endDate, 2)
+      startDate: (0, _addDays.default)(endDate, 2),
+      endDate: (0, _addDays.default)(endDate, 2)
     });
   });
   test('calculate new selection based on moveRangeOnFirstSelection prop', () => {
     testRenderer.update( /*#__PURE__*/_react.default.createElement(_DateRange.default, _extends({}, commonProps, {
       moveRangeOnFirstSelection: true
     })));
-    const methodResult = instance.calcNewSelection((0, _dateFns.subDays)(endDate, 10), true);
+    const methodResult = instance.calcNewSelection((0, _subDays.default)(endDate, 10), true);
     compareRanges(methodResult.range, {
-      startDate: (0, _dateFns.subDays)(endDate, 10),
-      endDate: (0, _dateFns.subDays)(endDate, 3)
+      startDate: (0, _subDays.default)(endDate, 10),
+      endDate: (0, _subDays.default)(endDate, 3)
     });
   });
   test('calculate new selection by retaining end date, based on retainEndDateOnFirstSelection prop', () => {
     testRenderer.update( /*#__PURE__*/_react.default.createElement(_DateRange.default, _extends({}, commonProps, {
       retainEndDateOnFirstSelection: true
     })));
-    const methodResult = instance.calcNewSelection((0, _dateFns.subDays)(endDate, 10), true);
+    const methodResult = instance.calcNewSelection((0, _subDays.default)(endDate, 10), true);
     compareRanges(methodResult.range, {
-      startDate: (0, _dateFns.subDays)(endDate, 10),
+      startDate: (0, _subDays.default)(endDate, 10),
       endDate
     });
   });
@@ -77,9 +79,9 @@ describe('DateRange', () => {
       }],
       retainEndDateOnFirstSelection: true
     })));
-    const methodResult = instance.calcNewSelection((0, _dateFns.subDays)(endDate, 10), true);
+    const methodResult = instance.calcNewSelection((0, _subDays.default)(endDate, 10), true);
     compareRanges(methodResult.range, {
-      startDate: (0, _dateFns.subDays)(endDate, 10),
+      startDate: (0, _subDays.default)(endDate, 10),
       endDate: null
     });
   });

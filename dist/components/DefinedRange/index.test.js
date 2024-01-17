@@ -3,7 +3,7 @@
 var _react = _interopRequireDefault(require("react"));
 var _enzyme = require("enzyme");
 var _DefinedRange = _interopRequireDefault(require("../DefinedRange"));
-var _dateFns = require("date-fns");
+var _isSameDay = _interopRequireDefault(require("date-fns/isSameDay"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 describe('DefinedRange tests', () => {
   test('Should call "renderStaticRangeLabel" callback correct amount of times according to the "hasCustomRendering" option', () => {
@@ -14,7 +14,7 @@ describe('DefinedRange tests', () => {
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         },
         hasCustomRendering: true
       }, {
@@ -22,14 +22,14 @@ describe('DefinedRange tests', () => {
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         }
       }, {
         label: 'Hede',
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         },
         hasCustomRendering: true
       }],
@@ -64,7 +64,7 @@ describe('DefinedRange tests', () => {
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         },
         hasCustomRendering: true
       }, {
@@ -72,14 +72,14 @@ describe('DefinedRange tests', () => {
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         }
       }, {
         id: 'whatever',
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         },
         hasCustomRendering: true
       }, {
@@ -87,7 +87,7 @@ describe('DefinedRange tests', () => {
         range: {},
         isSelected(range) {
           const definedRange = this.range();
-          return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+          return (0, _isSameDay.default)(range.startDate, definedRange.startDate) && (0, _isSameDay.default)(range.endDate, definedRange.endDate);
         },
         hasCustomRendering: true
       }],

@@ -9,7 +9,12 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _Calendar = _interopRequireDefault(require("../Calendar"));
 var _DayCell = require("../DayCell");
 var _utils = require("../../utils");
-var _dateFns = require("date-fns");
+var _max = _interopRequireDefault(require("date-fns/max"));
+var _isWithinInterval = _interopRequireDefault(require("date-fns/isWithinInterval"));
+var _min = _interopRequireDefault(require("date-fns/min"));
+var _addDays = _interopRequireDefault(require("date-fns/addDays"));
+var _differenceInCalendarDays = _interopRequireDefault(require("date-fns/differenceInCalendarDays"));
+var _isBefore = _interopRequireDefault(require("date-fns/isBefore"));
 var _classnames = _interopRequireDefault(require("classnames"));
 var _styles = _interopRequireDefault(require("../../styles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49,13 +54,13 @@ class DateRange extends _react.Component {
         endDate = value.endDate;
       } else if (focusedRange[1] === 0) {
         // startDate selection
-        const dayOffset = (0, _dateFns.differenceInCalendarDays)(endDate || now, startDate);
+        const dayOffset = (0, _differenceInCalendarDays.default)(endDate || now, startDate);
         const calculateEndDate = () => {
           if (moveRangeOnFirstSelection) {
-            return (0, _dateFns.addDays)(value, dayOffset);
+            return (0, _addDays.default)(value, dayOffset);
           }
           if (retainEndDateOnFirstSelection) {
-            if (!endDate || (0, _dateFns.isBefore)(value, endDate)) {
+            if (!endDate || (0, _isBefore.default)(value, endDate)) {
               return endDate;
             }
             return value;
@@ -64,7 +69,7 @@ class DateRange extends _react.Component {
         };
         startDate = value;
         endDate = calculateEndDate();
-        if (maxDate) endDate = (0, _dateFns.min)([endDate, maxDate]);
+        if (maxDate) endDate = (0, _min.default)([endDate, maxDate]);
         nextFocusRange = [focusedRange[0], 1];
       } else {
         endDate = value;
@@ -72,19 +77,19 @@ class DateRange extends _react.Component {
 
       // reverse dates if startDate before endDate
       let isStartDateSelected = focusedRange[1] === 0;
-      if ((0, _dateFns.isBefore)(endDate, startDate)) {
+      if ((0, _isBefore.default)(endDate, startDate)) {
         isStartDateSelected = !isStartDateSelected;
         [startDate, endDate] = [endDate, startDate];
       }
-      const inValidDatesWithinRange = disabledDates.filter(disabledDate => (0, _dateFns.isWithinInterval)(disabledDate, {
+      const inValidDatesWithinRange = disabledDates.filter(disabledDate => (0, _isWithinInterval.default)(disabledDate, {
         start: startDate,
         end: endDate
       }));
       if (inValidDatesWithinRange.length > 0) {
         if (isStartDateSelected) {
-          startDate = (0, _dateFns.addDays)((0, _dateFns.max)(inValidDatesWithinRange), 1);
+          startDate = (0, _addDays.default)((0, _max.default)(inValidDatesWithinRange), 1);
         } else {
-          endDate = (0, _dateFns.addDays)((0, _dateFns.min)(inValidDatesWithinRange), -1);
+          endDate = (0, _addDays.default)((0, _min.default)(inValidDatesWithinRange), -1);
         }
       }
       if (!nextFocusRange) {

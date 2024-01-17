@@ -103,6 +103,7 @@ Property                             | type      | Default Value    | Descriptio
 locale                               | Object    | enUS from locale | you can view full list from [here](https://github.com/hypeserver/react-date-range/tree/next/src/locale/index.js). Locales directly exported from [`date-fns/locales`](https://date-fns.org/docs/I18n#supported-languages).
 className                            | String    |                  | wrapper classname
 months                               | Number    | 1                | rendered month count
+showStaticRanges                     | Boolean   | true             | show clickable static range option presets on the left side
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
 showMonthAndYearPickers              | Boolean   | true             | show select tags for month and year on calendar top, if false it will just display the month and year
 rangeColors                          | String[]  |                  | defines color for selection preview.

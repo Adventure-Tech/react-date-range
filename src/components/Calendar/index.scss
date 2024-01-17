@@ -60,6 +60,10 @@
   display: flex;
 }
 
+.rdrMonthsWrap {
+  flex-wrap: wrap;
+}
+
 .rdrMonthsVertical{
   flex-direction: column;
 }

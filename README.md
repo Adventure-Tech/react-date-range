@@ -106,6 +106,11 @@ months                               | Number    | 1                | rendered m
 showStaticRanges                     | Boolean   | true             | show clickable static range option presets on the left side
 showSelectionPreview                 | Boolean   | true             | show preview on focused/hovered dates
 showMonthAndYearPickers              | Boolean   | true             | show select tags for month and year on calendar top, if false it will just display the month and year
+showWeekNumbers                      | Boolean   | false            | Whether or not to display Weeknumbers.
+showNavigatorYear                    | Boolean   | true             | Whether or not to display the Year in the navigator header on top of the calendar.
+showNavigatorMonth                   | Boolean   | true             | Whether or not to display the Month in the navigator header on top of the calendar.
+showMonthName                        | Boolean   | false            | Whether or not to display the Month name.
+showWeekDays                         | Boolean   | false            | Whether or not to display weekday names.
 rangeColors                          | String[]  |                  | defines color for selection preview.
 shownDate                            | Date      |                  | initial focus date
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
@@ -116,6 +121,8 @@ disabledDay                          | Func      |                  | predicate 
 scroll                               | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
+navigatorPrevIcon                    | React DOM Node   | undefined  | Use this DOM node as the prev button. This can for example be a SVG/icon node (navigatorPrevIcon={<IconHere />}. 
+navigatorNextIcon                    | React DOM Node   | undefined  | Use this DOM node as the next button. This can for example be a SVG/icon node (navigatorNextIcon={<IconHere />}. 
 ranges                               | *Object[] | []               | Defines ranges. array of range object
 moveRangeOnFirstSelection(DateRange) | Boolean   | false            | move range on startDate selection. Otherwise endDate will replace with startDate unless `retainEndDateOnFirstSelection` is set to true.
 retainEndDateOnFirstSelection(DateRange) | Boolean   | false            | Retain end date when the start date is changed, unless start date is later than end date. Ignored if `moveRangeOnFirstSelection` is set to true.

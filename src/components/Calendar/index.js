@@ -186,7 +186,7 @@ class Calendar extends PureComponent {
     this.isFirstRender = false;
   };
   renderMonthAndYear = (focusedDate, changeShownDate, props) => {
-    const { showMonthArrow, minDate, maxDate, showMonthAndYearPickers, ariaLabels } = props;
+    const { months, showMonthArrow, minDate, maxDate, showMonthAndYearPickers, showNavigatorMonth, showNavigatorYear, ariaLabels, navigatorPrevIcon, navigatorNextIcon } = props;
     const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
     const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
     const styles = this.styles;
@@ -196,56 +196,62 @@ class Calendar extends PureComponent {
           <button
             type="button"
             className={classnames(styles.nextPrevButton, styles.prevButton)}
-            onClick={() => changeShownDate(-1, 'monthOffset')}
+            onClick={() => changeShownDate(-months, 'monthOffset')}
             aria-label={ariaLabels.prevButton}>
-            <i />
+            {navigatorPrevIcon}
           </button>
         ) : null}
         {showMonthAndYearPickers ? (
           <span className={styles.monthAndYearPickers}>
-            <span className={styles.monthPicker}>
-              <select
-                value={focusedDate.getMonth()}
-                onChange={e => changeShownDate(e.target.value, 'setMonth')}
-                aria-label={ariaLabels.monthPicker}>
-                {this.state.monthNames.map((monthName, i) => (
-                  <option key={i} value={i}>
-                    {monthName}
-                  </option>
-                ))}
-              </select>
-            </span>
-            <span className={styles.monthAndYearDivider} />
-            <span className={styles.yearPicker}>
-              <select
-                value={focusedDate.getFullYear()}
-                onChange={e => changeShownDate(e.target.value, 'setYear')}
-                aria-label={ariaLabels.yearPicker}>
-                {new Array(upperYearLimit - lowerYearLimit + 1)
-                  .fill(upperYearLimit)
-                  .map((val, i) => {
-                    const year = val - i;
-                    return (
-                      <option key={year} value={year}>
-                        {year}
+            {showNavigatorMonth && (
+              <>
+                <span className={styles.monthPicker}>
+                  <select
+                    value={focusedDate.getMonth()}
+                    onChange={e => changeShownDate(e.target.value, 'setMonth')}
+                    aria-label={ariaLabels.monthPicker}>
+                    {this.state.monthNames.map((monthName, i) => (
+                      <option key={i} value={i}>
+                        {monthName}
                       </option>
-                    );
-                  })}
-              </select>
-            </span>
+                    ))}
+                  </select>
+                </span>
+                <span className={styles.monthAndYearDivider} />
+              </>
+            )}
+            {showNavigatorYear && (
+              <span className={styles.yearPicker}>
+                <select
+                  value={focusedDate.getFullYear()}
+                  onChange={e => changeShownDate(e.target.value, 'setYear')}
+                  aria-label={ariaLabels.yearPicker}>
+                  {new Array(upperYearLimit - lowerYearLimit + 1)
+                    .fill(upperYearLimit)
+                    .map((val, i) => {
+                      const year = val - i;
+                      return (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      );
+                    })}
+                </select>
+              </span>
+            )}
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
-            {this.state.monthNames[focusedDate.getMonth()]} {focusedDate.getFullYear()}
+            {showNavigatorMonth && this.state.monthNames[focusedDate.getMonth()]} {showNavigatorYear && focusedDate.getFullYear()}
           </span>
         )}
         {showMonthArrow ? (
           <button
             type="button"
             className={classnames(styles.nextPrevButton, styles.nextButton)}
-            onClick={() => changeShownDate(+1, 'monthOffset')}
+            onClick={() => changeShownDate(months, 'monthOffset')}
             aria-label={ariaLabels.nextButton}>
-            <i />
+            {navigatorNextIcon}
           </button>
         ) : null}
       </div>
@@ -414,6 +420,7 @@ class Calendar extends PureComponent {
     } = this.props;
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
+    const isWrap = direction === 'wrap';
     const monthAndYearRenderer = navigatorRenderer || this.renderMonthAndYear;
 
     const ranges = this.props.ranges.map((range, i) => ({
@@ -480,7 +487,7 @@ class Calendar extends PureComponent {
                           : { height: scrollArea.monthHeight, width: this.estimateMonthSize(index) }
                       }
                       showMonthName
-                      showWeekDays={!isVertical}
+                      showWeekDays={this.props.showWeekDays || !isVertical}
                     />
                   );
                 }}
@@ -491,7 +498,7 @@ class Calendar extends PureComponent {
           <div
             className={classnames(
               this.styles.months,
-              isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
+              isWrap ? this.styles.monthsWrap : isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
               let monthStep = addMonths(this.state.focusedDate, i);
@@ -515,8 +522,8 @@ class Calendar extends PureComponent {
                   onDragSelectionMove={this.onDragSelectionMove}
                   onMouseLeave={() => onPreviewChange && onPreviewChange()}
                   styles={this.styles}
-                  showWeekDays={!isVertical || i === 0}
-                  showMonthName={!isVertical || i > 0}
+                  showWeekDays={this.props.showWeekDays || !isVertical || i === 0}
+                  showMonthName={this.props.showMonthName || !isVertical || i > 0}
                 />
               );
             })}
@@ -530,8 +537,13 @@ class Calendar extends PureComponent {
 Calendar.defaultProps = {
   showMonthArrow: true,
   showMonthAndYearPickers: true,
+  showWeekNumbers: false,
+  showNavigatorYear: true,
+  showNavigatorMonth: true,
+  showMonthName: false,
+  showWeekDays: false,
   disabledDates: [],
-  disabledDay: () => { },
+  disabledDay: () => {},
   classNames: {},
   locale: defaultLocale,
   ranges: [],
@@ -560,11 +572,18 @@ Calendar.defaultProps = {
   calendarFocus: 'forwards',
   preventSnapRefocus: false,
   ariaLabels: {},
+  navigatorPrevIcon: <i />,
+  navigatorNextIcon: <i />,
 };
 
 Calendar.propTypes = {
   showMonthArrow: PropTypes.bool,
   showMonthAndYearPickers: PropTypes.bool,
+  showWeekNumbers: PropTypes.bool,
+  showNavigatorYear: PropTypes.bool,
+  showNavigatorMonth: PropTypes.bool,
+  showMonthName: PropTypes.bool,
+  showWeekDays: PropTypes.bool,
   disabledDates: PropTypes.array,
   disabledDay: PropTypes.func,
   minDate: PropTypes.object,
@@ -605,7 +624,7 @@ Calendar.propTypes = {
     calendarWidth: PropTypes.number,
     calendarHeight: PropTypes.number,
   }),
-  direction: PropTypes.oneOf(['vertical', 'horizontal']),
+  direction: PropTypes.oneOf(['vertical', 'horizontal', 'wrap']),
   startDatePlaceholder: PropTypes.string,
   endDatePlaceholder: PropTypes.string,
   navigatorRenderer: PropTypes.func,
@@ -616,6 +635,8 @@ Calendar.propTypes = {
   calendarFocus: PropTypes.string,
   preventSnapRefocus: PropTypes.bool,
   ariaLabels: ariaLabelsShape,
+  navigatorPrevIcon: PropTypes.node,
+  navigatorNextIcon: PropTypes.node,
 };
 
 export default Calendar;

@@ -4,6 +4,10 @@
   position: relative;
   font: inherit;
   cursor: pointer;
+
+  .rdrWeekNumbers & {
+      width: calc(100% / 8);
+  }
 }
 
 .rdrDayNumber {

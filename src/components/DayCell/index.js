@@ -11,7 +11,7 @@ class DayCell extends Component {
     this.state = {
       hover: false,
       active: false,
-      touchOverDay: props.day.toISOString(),
+      touchOverDay: !props.isWeekNumber ? props.day.toISOString() : '',
     };
   }
 
@@ -119,6 +119,7 @@ class DayCell extends Component {
       isEndOfWeek,
       isStartOfMonth,
       isEndOfMonth,
+      isWeekNumber,
       disabled,
       styles,
     } = this.props;
@@ -134,10 +135,11 @@ class DayCell extends Component {
       [styles.dayEndOfMonth]: isEndOfMonth,
       [styles.dayHovered]: this.state.hover,
       [styles.dayActive]: this.state.active,
+      [styles.weekNumber]: isWeekNumber,
     });
   };
   renderPreviewPlaceholder = () => {
-    const { preview, day, styles } = this.props;
+    const { preview, day, styles, isWeekNumber } = this.props;
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
@@ -209,27 +211,30 @@ class DayCell extends Component {
     return (
       <button
         type="button"
-        data-day={this.props.day.toISOString()}
-        onMouseEnter={this.handleMouseEvent}
-        onMouseLeave={this.handleMouseEvent}
-        onTouchStart={this.handleTouchEvent}
-        onTouchMove={this.handleTouchEvent}
-        onTouchEnd={this.handleTouchEvent}
-        onFocus={this.handleMouseEvent}
-        onMouseDown={this.handleMouseEvent}
-        onMouseUp={this.handleMouseEvent}
-        onBlur={this.handleMouseEvent}
-        onPauseCapture={this.handleMouseEvent}
-        onKeyDown={this.handleKeyEvent}
-        onKeyUp={this.handleKeyEvent}
+        data-day={!this.props.isWeekNumber ? this.props.day.toISOString() : 'weeknumber'}
+        {...(!this.props.isWeekNumber ? {
+          onMouseEnter: this.handleMouseEvent,
+          onMouseLeave: this.handleMouseEvent,
+          onTouchStart: this.handleTouchEvent,
+          onTouchMove: this.handleTouchEvent,
+          onTouchEnd: this.handleTouchEvent,
+          onFocus: this.handleMouseEvent,
+          onMouseDown: this.handleMouseEvent,
+          onMouseUp: this.handleMouseEvent,
+          onBlur: this.handleMouseEvent,
+          onPauseCapture: this.handleMouseEvent,
+          onKeyDown: this.handleKeyEvent,
+          onKeyUp: this.handleKeyEvent,
+          } : {}
+        )}
         className={this.getClassNames(this.props.styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
-        {this.renderSelectionPlaceholders()}
-        {this.renderPreviewPlaceholder()}
+        {!this.props.isWeekNumber && this.renderSelectionPlaceholders()}
+        {!this.props.isWeekNumber && this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
           {dayContentRenderer?.(this.props.day) || (
-            <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
+            <span>{format(this.props.day, this.props.isWeekNumber ? 'I' : this.props.dayDisplayFormat)}</span>
           )}
         </span>
       </button>
@@ -237,7 +242,9 @@ class DayCell extends Component {
   }
 }
 
-DayCell.defaultProps = {};
+DayCell.defaultProps = {
+  isWeekNumber: false,
+};
 
 export const rangeShape = PropTypes.shape({
   startDate: PropTypes.object,
@@ -269,6 +276,7 @@ DayCell.propTypes = {
   isEndOfWeek: PropTypes.bool,
   isStartOfMonth: PropTypes.bool,
   isEndOfMonth: PropTypes.bool,
+  isWeekNumber: PropTypes.bool,
   color: PropTypes.string,
   displayMode: PropTypes.oneOf(['dateRange', 'date']),
   styles: PropTypes.object,

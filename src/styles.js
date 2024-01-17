@@ -10,6 +10,8 @@ export default {
   month: 'rdrMonth',
   weekDays: 'rdrWeekDays',
   weekDay: 'rdrWeekDay',
+  weekNumbers: 'rdrWeekNumbers',
+  weekNumber: 'rdrWeekNumber',
   days: 'rdrDays',
   day: 'rdrDay',
   dayNumber: 'rdrDayNumber',
@@ -50,4 +52,5 @@ export default {
   infiniteMonths: 'rdrInfiniteMonths',
   monthsVertical: 'rdrMonthsVertical',
   monthsHorizontal: 'rdrMonthsHorizontal',
+  monthsWrap: 'rdrMonthsWrap',
 };

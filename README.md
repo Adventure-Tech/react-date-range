@@ -115,7 +115,7 @@ rangeColors                          | String[]  |                  | defines co
 shownDate                            | Date      |                  | initial focus date
 minDate                              | Date      |                  | defines minimum date. Disabled earlier dates
 maxDate                              | Date      |                  | defines maximum date. Disabled later dates
-direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical` or `horizontal`
+direction                            | String    | 'vertical'       | direction of calendar months. can be `vertical`, `horizontal` or `wrap`
 disabledDates                        | Date[]    | []               | dates that are disabled
 disabledDay                          | Func      |                  | predicate function that disable day fn(date: Date)
 scroll                               | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section

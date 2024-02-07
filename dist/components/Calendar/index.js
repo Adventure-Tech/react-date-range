@@ -435,6 +435,7 @@ class Calendar extends _react.PureComponent {
       rangeColors,
       color,
       navigatorRenderer,
+      navigatorContainerRenderer,
       className,
       preview
     } = this.props;
@@ -471,7 +472,7 @@ class Calendar extends _react.PureComponent {
           }
         });
       }
-    }, showDateDisplay && this.renderDateDisplay(), monthAndYearRenderer(focusedDate, this.changeShownDate, this.props), scroll.enabled ? /*#__PURE__*/_react.default.createElement("div", null, isVertical && this.renderWeekdays(this.dateOptions), /*#__PURE__*/_react.default.createElement("div", {
+    }, showDateDisplay && this.renderDateDisplay(), !navigatorContainerRenderer ? monthAndYearRenderer(focusedDate, this.changeShownDate, this.props) : navigatorContainerRenderer(monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)), scroll.enabled ? /*#__PURE__*/_react.default.createElement("div", null, isVertical && this.renderWeekdays(this.dateOptions), /*#__PURE__*/_react.default.createElement("div", {
       className: (0, _classnames.default)(this.styles.infiniteMonths, isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal),
       onMouseLeave: () => onPreviewChange && onPreviewChange(),
       style: {
@@ -634,6 +635,7 @@ Calendar.propTypes = {
   startDatePlaceholder: _propTypes.default.string,
   endDatePlaceholder: _propTypes.default.string,
   navigatorRenderer: _propTypes.default.func,
+  navigatorContainerRenderer: _propTypes.default.func,
   rangeColors: _propTypes.default.arrayOf(_propTypes.default.string),
   editableDateInputs: _propTypes.default.bool,
   dragSelectionEnabled: _propTypes.default.bool,

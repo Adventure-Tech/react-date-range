@@ -121,6 +121,7 @@ disabledDay                          | Func      |                  | predicate 
 scroll                               | Object    | { enabled: false }| infinite scroll behaviour configuration. Check out [Infinite Scroll](#infinite-scrolled-mode) section
 showMonthArrow                       | Boolean   | true             | show/hide month arrow button
 navigatorRenderer                    | Func      |                  | renderer for focused date navigation area. fn(currentFocusedDate: Date, changeShownDate: func, props: object)
+navigatorContainerRenderer           | Func      |                  | renderer for navigator container, this function will receive the result from the navigatorRenderer() function call above. This property is usefull if you want to render the navigator outside of the calendar component, by using React-portals in your function return statement. 
 navigatorPrevIcon                    | React DOM Node   | undefined  | Use this DOM node as the prev button. This can for example be a SVG/icon node (navigatorPrevIcon={<IconHere />}. 
 navigatorNextIcon                    | React DOM Node   | undefined  | Use this DOM node as the next button. This can for example be a SVG/icon node (navigatorNextIcon={<IconHere />}. 
 ranges                               | *Object[] | []               | Defines ranges. array of range object

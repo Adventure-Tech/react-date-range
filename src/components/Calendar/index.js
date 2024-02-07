@@ -415,6 +415,7 @@ class Calendar extends PureComponent {
       rangeColors,
       color,
       navigatorRenderer,
+      navigatorContainerRenderer,
       className,
       preview,
     } = this.props;
@@ -436,7 +437,8 @@ class Calendar extends PureComponent {
           this.setState({ drag: { status: false, range: {} } });
         }}>
         {showDateDisplay && this.renderDateDisplay()}
-        {monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)}
+        {!navigatorContainerRenderer ? monthAndYearRenderer(focusedDate, this.changeShownDate, this.props) :
+          navigatorContainerRenderer(monthAndYearRenderer(focusedDate, this.changeShownDate, this.props))}
         {scroll.enabled ? (
           <div>
             {isVertical && this.renderWeekdays(this.dateOptions)}
@@ -628,6 +630,7 @@ Calendar.propTypes = {
   startDatePlaceholder: PropTypes.string,
   endDatePlaceholder: PropTypes.string,
   navigatorRenderer: PropTypes.func,
+  navigatorContainerRenderer: PropTypes.func,
   rangeColors: PropTypes.arrayOf(PropTypes.string),
   editableDateInputs: PropTypes.bool,
   dragSelectionEnabled: PropTypes.bool,

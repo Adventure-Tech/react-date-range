@@ -178,7 +178,7 @@ class Calendar extends _react.PureComponent {
         }, year);
       })))) : /*#__PURE__*/_react.default.createElement("span", {
         className: styles.monthAndYearPickers
-      }, showNavigatorMonth && this.state.monthNames[focusedDate.getMonth()], " ", showNavigatorYear && focusedDate.getFullYear()), showMonthArrow ? /*#__PURE__*/_react.default.createElement("button", {
+      }, showNavigatorMonth && this.state.monthNames[focusedDate.getMonth()], ' ', showNavigatorYear && focusedDate.getFullYear()), showMonthArrow ? /*#__PURE__*/_react.default.createElement("button", {
         type: "button",
         className: (0, _classnames.default)(styles.nextPrevButton, styles.nextButton),
         onClick: () => changeShownDate(months, 'monthOffset'),

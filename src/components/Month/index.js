@@ -38,7 +38,15 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbe
 class Month extends PureComponent {
   render() {
     const now = new Date();
-    const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay, showWeekNumbers } = this.props;
+    const {
+      displayMode,
+      focusedRange,
+      drag,
+      styles,
+      disabledDates,
+      disabledDay,
+      showWeekNumbers,
+    } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
     const monthDisplay = getMonthDisplayRange(
@@ -60,18 +68,27 @@ class Month extends PureComponent {
     }
     const showPreview = this.props.showPreview && !drag.disablePreview;
     return (
-      <div className={`${styles.month} ${showWeekNumbers ? styles.weekNumbers : ''}`} style={this.props.style}>
+      <div
+        className={`${styles.month} ${showWeekNumbers ? styles.weekNumbers : ''}`}
+        style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
             {this.props.monthNames && this.props.monthNames[format(this.props.month, 'M') - 1]}
-            {!this.props.monthNames && format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            {!this.props.monthNames &&
+              format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
           </div>
         ) : null}
         {this.props.showWeekDays &&
-          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat, showWeekNumbers, this.props.dayNames)}
+          renderWeekdays(
+            styles,
+            this.props.dateOptions,
+            this.props.weekdayDisplayFormat,
+            showWeekNumbers,
+            this.props.dayNames
+          )}
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
-          {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
-            (day, index) => {
+          {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end })
+            .map((day, index) => {
               const isStartOfMonth = isSameDay(day, monthDisplay.startDateOfMonth);
               const isEndOfMonth = isSameDay(day, monthDisplay.endDateOfMonth);
               const isOutsideMinMax =
@@ -80,7 +97,8 @@ class Month extends PureComponent {
                 isSameDay(disabledDate, day)
               );
               const isDisabledDay = disabledDay(day);
-              return [showWeekNumbers && index % 7 === 0 ? (
+              return [
+                showWeekNumbers && index % 7 === 0 ? (
                   <DayCell
                     {...this.props}
                     day={day}
@@ -88,37 +106,35 @@ class Month extends PureComponent {
                     key={`weeknumber.${index}`}
                   />
                 ) : null,
-                (
-                  <DayCell
-                    {...this.props}
-                    ranges={ranges}
-                    day={day}
-                    preview={showPreview ? this.props.preview : null}
-                    isWeekend={isWeekend(day, this.props.dateOptions)}
-                    isToday={isSameDay(day, now)}
-                    isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
-                    isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
-                    isStartOfMonth={isStartOfMonth}
-                    isEndOfMonth={isEndOfMonth}
-                    key={index}
-                    disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
-                    isPassive={
-                      !isWithinInterval(day, {
-                        start: monthDisplay.startDateOfMonth,
-                        end: monthDisplay.endDateOfMonth,
-                      })
-                    }
-                    styles={styles}
-                    onMouseDown={this.props.onDragSelectionStart}
-                    onMouseUp={this.props.onDragSelectionEnd}
-                    onMouseEnter={this.props.onDragSelectionMove}
-                    dragRange={drag.range}
-                    drag={drag.status}
-                  />
-                )
+                <DayCell
+                  {...this.props}
+                  ranges={ranges}
+                  day={day}
+                  preview={showPreview ? this.props.preview : null}
+                  isWeekend={isWeekend(day, this.props.dateOptions)}
+                  isToday={isSameDay(day, now)}
+                  isStartOfWeek={isSameDay(day, startOfWeek(day, this.props.dateOptions))}
+                  isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
+                  isStartOfMonth={isStartOfMonth}
+                  isEndOfMonth={isEndOfMonth}
+                  key={index}
+                  disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
+                  isPassive={
+                    !isWithinInterval(day, {
+                      start: monthDisplay.startDateOfMonth,
+                      end: monthDisplay.endDateOfMonth,
+                    })
+                  }
+                  styles={styles}
+                  onMouseDown={this.props.onDragSelectionStart}
+                  onMouseUp={this.props.onDragSelectionEnd}
+                  onMouseEnter={this.props.onDragSelectionMove}
+                  dragRange={drag.range}
+                  drag={drag.status}
+                />,
               ];
-            }
-          ).flat()}
+            })
+            .flat()}
         </div>
       </div>
     );

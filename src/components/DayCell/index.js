@@ -139,7 +139,7 @@ class DayCell extends Component {
     });
   };
   renderPreviewPlaceholder = () => {
-    const { preview, day, styles, isWeekNumber } = this.props;
+    const { preview, day, styles } = this.props;
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
@@ -212,21 +212,22 @@ class DayCell extends Component {
       <button
         type="button"
         data-day={!this.props.isWeekNumber ? this.props.day.toISOString() : 'weeknumber'}
-        {...(!this.props.isWeekNumber ? {
-          onMouseEnter: this.handleMouseEvent,
-          onMouseLeave: this.handleMouseEvent,
-          onTouchStart: this.handleTouchEvent,
-          onTouchMove: this.handleTouchEvent,
-          onTouchEnd: this.handleTouchEvent,
-          onFocus: this.handleMouseEvent,
-          onMouseDown: this.handleMouseEvent,
-          onMouseUp: this.handleMouseEvent,
-          onBlur: this.handleMouseEvent,
-          onPauseCapture: this.handleMouseEvent,
-          onKeyDown: this.handleKeyEvent,
-          onKeyUp: this.handleKeyEvent,
-          } : {}
-        )}
+        {...(!this.props.isWeekNumber
+          ? {
+              onMouseEnter: this.handleMouseEvent,
+              onMouseLeave: this.handleMouseEvent,
+              onTouchStart: this.handleTouchEvent,
+              onTouchMove: this.handleTouchEvent,
+              onTouchEnd: this.handleTouchEvent,
+              onFocus: this.handleMouseEvent,
+              onMouseDown: this.handleMouseEvent,
+              onMouseUp: this.handleMouseEvent,
+              onBlur: this.handleMouseEvent,
+              onPauseCapture: this.handleMouseEvent,
+              onKeyDown: this.handleKeyEvent,
+              onKeyUp: this.handleKeyEvent,
+            }
+          : {})}
         className={this.getClassNames(this.props.styles)}
         {...(this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {})}
         style={{ color: this.props.color }}>
@@ -234,7 +235,9 @@ class DayCell extends Component {
         {!this.props.isWeekNumber && this.renderPreviewPlaceholder()}
         <span className={this.props.styles.dayNumber}>
           {dayContentRenderer?.(this.props.day) || (
-            <span>{format(this.props.day, this.props.isWeekNumber ? 'I' : this.props.dayDisplayFormat)}</span>
+            <span>
+              {format(this.props.day, this.props.isWeekNumber ? 'I' : this.props.dayDisplayFormat)}
+            </span>
           )}
         </span>
       </button>

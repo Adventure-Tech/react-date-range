@@ -157,8 +157,7 @@ class DayCell extends _react.Component {
       const {
         preview,
         day,
-        styles,
-        isWeekNumber
+        styles
       } = this.props;
       if (!preview) return null;
       const startDate = preview.startDate ? (0, _dateFns.endOfDay)(preview.startDate) : null;

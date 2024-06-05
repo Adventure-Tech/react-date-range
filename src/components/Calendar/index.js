@@ -99,9 +99,9 @@ class Calendar extends PureComponent {
   updateShownDate = (props = this.props) => {
     const newProps = props.scroll.enabled
       ? {
-        ...props,
-        months: this.list.getVisibleRange().length,
-      }
+          ...props,
+          months: this.list.getVisibleRange().length,
+        }
       : props;
     const newFocus = calcFocusDate(this.state.focusedDate, newProps);
     this.focusToDate(newFocus, newProps);
@@ -186,7 +186,18 @@ class Calendar extends PureComponent {
     this.isFirstRender = false;
   };
   renderMonthAndYear = (focusedDate, changeShownDate, props) => {
-    const { months, showMonthArrow, minDate, maxDate, showMonthAndYearPickers, showNavigatorMonth, showNavigatorYear, ariaLabels, navigatorPrevIcon, navigatorNextIcon } = props;
+    const {
+      months,
+      showMonthArrow,
+      minDate,
+      maxDate,
+      showMonthAndYearPickers,
+      showNavigatorMonth,
+      showNavigatorYear,
+      ariaLabels,
+      navigatorPrevIcon,
+      navigatorNextIcon,
+    } = props;
     const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
     const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
     const styles = this.styles;
@@ -242,7 +253,8 @@ class Calendar extends PureComponent {
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
-            {showNavigatorMonth && this.state.monthNames[focusedDate.getMonth()]} {showNavigatorYear && focusedDate.getFullYear()}
+            {showNavigatorMonth && this.state.monthNames[focusedDate.getMonth()]}{' '}
+            {showNavigatorYear && focusedDate.getFullYear()}
           </span>
         )}
         {showMonthArrow ? (
@@ -437,8 +449,11 @@ class Calendar extends PureComponent {
           this.setState({ drag: { status: false, range: {} } });
         }}>
         {showDateDisplay && this.renderDateDisplay()}
-        {!navigatorContainerRenderer ? monthAndYearRenderer(focusedDate, this.changeShownDate, this.props) :
-          navigatorContainerRenderer(monthAndYearRenderer(focusedDate, this.changeShownDate, this.props))}
+        {!navigatorContainerRenderer
+          ? monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)
+          : navigatorContainerRenderer(
+              monthAndYearRenderer(focusedDate, this.changeShownDate, this.props)
+            )}
         {scroll.enabled ? (
           <div>
             {isVertical && this.renderWeekdays(this.dateOptions)}
@@ -500,7 +515,11 @@ class Calendar extends PureComponent {
           <div
             className={classnames(
               this.styles.months,
-              isWrap ? this.styles.monthsWrap : isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
+              isWrap
+                ? this.styles.monthsWrap
+                : isVertical
+                ? this.styles.monthsVertical
+                : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
               let monthStep = addMonths(this.state.focusedDate, i);

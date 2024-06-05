@@ -156,7 +156,8 @@ staticRanges(`DefinedRange`, `DateRangePicker`)  | Array            | [default p
 inputRanges(`DefinedRange`, `DateRangePicker`)   | Array            | [default input ranges](https://github.com/hypeserver/react-date-range/blob/master/src/defaultRanges.js)             | -
 ariaLabels                           | Object    | {}               | inserts aria-label to inner elements
 dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
-
+monthNames                   | Array  | undefined             | List of month names. Must contain the names of all 12 months. 
+dayNames                   | Array  | undefined             | List of day names. Must contain the names of all 7 weekdays. 
  *shape of range:
  ```js
   {

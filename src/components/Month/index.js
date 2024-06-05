@@ -17,7 +17,7 @@ import {
 } from 'date-fns';
 import { getMonthDisplayRange } from '../../utils';
 
-function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbers) {
+function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbers, dayNames) {
   const now = new Date();
   return (
     <div className={styles.weekDays}>
@@ -27,7 +27,8 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbe
         end: endOfWeek(now, dateOptions),
       }).map((day, i) => (
         <span className={styles.weekDay} key={i}>
-          {format(day, weekdayDisplayFormat, dateOptions)}
+          {dayNames && dayNames[format(day, 'i') - 1].slice(0, 3)}
+          {!dayNames && format(day, weekdayDisplayFormat, dateOptions)}
         </span>
       ))}
     </div>
@@ -62,11 +63,12 @@ class Month extends PureComponent {
       <div className={`${styles.month} ${showWeekNumbers ? styles.weekNumbers : ''}`} style={this.props.style}>
         {this.props.showMonthName ? (
           <div className={styles.monthName}>
-            {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
+            {this.props.monthNames && this.props.monthNames[format(this.props.month, 'M') - 1]}
+            {!this.props.monthNames && format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
           </div>
         ) : null}
         {this.props.showWeekDays &&
-          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat, showWeekNumbers)}
+          renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat, showWeekNumbers, this.props.dayNames)}
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
           {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
             (day, index) => {
@@ -154,6 +156,8 @@ Month.propTypes = {
   showWeekDays: PropTypes.bool,
   showMonthName: PropTypes.bool,
   fixedHeight: PropTypes.bool,
+  monthNames: PropTypes.arrayOf(PropTypes.string),
+  dayNames: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Month;

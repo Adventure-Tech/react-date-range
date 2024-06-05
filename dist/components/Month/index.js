@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); } /* eslint-disable no-fallthrough */
-function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbers) {
+function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbers, dayNames) {
   const now = new Date();
   return /*#__PURE__*/_react.default.createElement("div", {
     className: styles.weekDays
@@ -25,7 +25,7 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, showWeekNumbe
   }).map((day, i) => /*#__PURE__*/_react.default.createElement("span", {
     className: styles.weekDay,
     key: i
-  }, (0, _dateFns.format)(day, weekdayDisplayFormat, dateOptions))));
+  }, dayNames && dayNames[(0, _dateFns.format)(day, 'i') - 1].slice(0, 3), !dayNames && (0, _dateFns.format)(day, weekdayDisplayFormat, dateOptions))));
 }
 class Month extends _react.PureComponent {
   render() {
@@ -63,7 +63,7 @@ class Month extends _react.PureComponent {
       style: this.props.style
     }, this.props.showMonthName ? /*#__PURE__*/_react.default.createElement("div", {
       className: styles.monthName
-    }, (0, _dateFns.format)(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)) : null, this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat, showWeekNumbers), /*#__PURE__*/_react.default.createElement("div", {
+    }, this.props.monthNames && this.props.monthNames[(0, _dateFns.format)(this.props.month, 'M') - 1], !this.props.monthNames && (0, _dateFns.format)(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)) : null, this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat, showWeekNumbers, this.props.dayNames), /*#__PURE__*/_react.default.createElement("div", {
       className: styles.days,
       onMouseLeave: this.props.onMouseLeave
     }, (0, _dateFns.eachDayOfInterval)({
@@ -134,6 +134,8 @@ Month.propTypes = {
   dayDisplayFormat: _propTypes.default.string,
   showWeekDays: _propTypes.default.bool,
   showMonthName: _propTypes.default.bool,
-  fixedHeight: _propTypes.default.bool
+  fixedHeight: _propTypes.default.bool,
+  monthNames: _propTypes.default.arrayOf(_propTypes.default.string),
+  dayNames: _propTypes.default.arrayOf(_propTypes.default.string)
 };
 var _default = exports.default = Month;

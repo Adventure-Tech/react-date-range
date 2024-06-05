@@ -640,6 +640,8 @@ Calendar.propTypes = {
   ariaLabels: ariaLabelsShape,
   navigatorPrevIcon: PropTypes.node,
   navigatorNextIcon: PropTypes.node,
+  monthNames: PropTypes.arrayOf(PropTypes.string),
+  dayNames: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Calendar;

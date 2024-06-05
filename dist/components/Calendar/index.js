@@ -644,6 +644,8 @@ Calendar.propTypes = {
   preventSnapRefocus: _propTypes.default.bool,
   ariaLabels: _accessibility.ariaLabelsShape,
   navigatorPrevIcon: _propTypes.default.node,
-  navigatorNextIcon: _propTypes.default.node
+  navigatorNextIcon: _propTypes.default.node,
+  monthNames: _propTypes.default.arrayOf(_propTypes.default.string),
+  dayNames: _propTypes.default.arrayOf(_propTypes.default.string)
 };
 var _default = exports.default = Calendar;

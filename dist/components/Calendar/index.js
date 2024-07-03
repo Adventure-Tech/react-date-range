@@ -274,7 +274,7 @@ class Calendar extends _react.PureComponent {
         startDate: this.state.drag.range.startDate,
         endDate: date
       };
-      if (displayMode !== 'dateRange' || (0, _dateFns.isSameDay)(newRange.startDate, date)) {
+      if (displayMode !== 'dateRange' || (0, _dateFns.isSameDay)(newRange.startDate, date) && !this.props.dragRangeOnly) {
         this.setState({
           drag: {
             status: false,
@@ -581,7 +581,8 @@ Calendar.defaultProps = {
   preventSnapRefocus: false,
   ariaLabels: {},
   navigatorPrevIcon: /*#__PURE__*/_react.default.createElement("i", null),
-  navigatorNextIcon: /*#__PURE__*/_react.default.createElement("i", null)
+  navigatorNextIcon: /*#__PURE__*/_react.default.createElement("i", null),
+  dragRangeOnly: false
 };
 Calendar.propTypes = {
   showMonthArrow: _propTypes.default.bool,
@@ -646,6 +647,7 @@ Calendar.propTypes = {
   navigatorPrevIcon: _propTypes.default.node,
   navigatorNextIcon: _propTypes.default.node,
   monthNames: _propTypes.default.arrayOf(_propTypes.default.string),
-  dayNames: _propTypes.default.arrayOf(_propTypes.default.string)
+  dayNames: _propTypes.default.arrayOf(_propTypes.default.string),
+  dragRangeOnly: _propTypes.default.bool
 };
 var _default = exports.default = Calendar;

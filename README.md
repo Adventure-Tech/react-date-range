@@ -158,6 +158,7 @@ ariaLabels                           | Object    | {}               | inserts ar
 dayContentRenderer                   | Function  | null             | Function to customize the rendering of Calendar Day. given a date is supposed to return what to render.
 monthNames                   | Array  | undefined             | List of month names. Must contain the names of all 12 months. 
 dayNames                   | Array  | undefined             | List of day names. Must contain the names of all 7 weekdays. 
+dragRangeOnly                        | Boolean   | false            | Only allow range selection when pressing down to drag. If you click normally it will only select a single day under the mouse. 
  *shape of range:
  ```js
   {

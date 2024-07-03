@@ -57,14 +57,17 @@ class Month extends PureComponent {
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
       let { startDate, endDate } = drag.range;
-      ranges = ranges.map((range, i) => {
-        if (i !== focusedRange[0]) return range;
-        return {
-          ...range,
-          startDate,
-          endDate,
-        };
-      });
+
+      if (this.props.dragRangeOnly) ranges.push({ startDate, endDate });
+      else
+        ranges = ranges.map((range, i) => {
+          if (i !== focusedRange[0]) return range;
+          return {
+            ...range,
+            startDate,
+            endDate,
+          };
+        });
     }
     const showPreview = this.props.showPreview && !drag.disablePreview;
     return (
@@ -174,6 +177,7 @@ Month.propTypes = {
   fixedHeight: PropTypes.bool,
   monthNames: PropTypes.arrayOf(PropTypes.string),
   dayNames: PropTypes.arrayOf(PropTypes.string),
+  dragRangeOnly: PropTypes.bool,
 };
 
 export default Month;

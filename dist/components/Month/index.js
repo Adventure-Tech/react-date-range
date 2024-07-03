@@ -48,7 +48,10 @@ class Month extends _react.PureComponent {
         startDate,
         endDate
       } = drag.range;
-      ranges = ranges.map((range, i) => {
+      if (this.props.dragRangeOnly) ranges.push({
+        startDate,
+        endDate
+      });else ranges = ranges.map((range, i) => {
         if (i !== focusedRange[0]) return range;
         return {
           ...range,
@@ -136,6 +139,7 @@ Month.propTypes = {
   showMonthName: _propTypes.default.bool,
   fixedHeight: _propTypes.default.bool,
   monthNames: _propTypes.default.arrayOf(_propTypes.default.string),
-  dayNames: _propTypes.default.arrayOf(_propTypes.default.string)
+  dayNames: _propTypes.default.arrayOf(_propTypes.default.string),
+  dragRangeOnly: _propTypes.default.bool
 };
 var _default = exports.default = Month;

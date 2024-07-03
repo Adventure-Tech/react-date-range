@@ -381,7 +381,10 @@ class Calendar extends PureComponent {
       startDate: this.state.drag.range.startDate,
       endDate: date,
     };
-    if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, date)) {
+    if (
+      displayMode !== 'dateRange' ||
+      (isSameDay(newRange.startDate, date) && !this.props.dragRangeOnly)
+    ) {
       this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
     } else {
       this.setState({ drag: { status: false, range: {} } }, () => {
@@ -595,6 +598,7 @@ Calendar.defaultProps = {
   ariaLabels: {},
   navigatorPrevIcon: <i />,
   navigatorNextIcon: <i />,
+  dragRangeOnly: false,
 };
 
 Calendar.propTypes = {
@@ -661,6 +665,7 @@ Calendar.propTypes = {
   navigatorNextIcon: PropTypes.node,
   monthNames: PropTypes.arrayOf(PropTypes.string),
   dayNames: PropTypes.arrayOf(PropTypes.string),
+  dragRangeOnly: PropTypes.bool,
 };
 
 export default Calendar;
